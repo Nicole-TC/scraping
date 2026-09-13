@@ -1,29 +1,9 @@
 services:
   scraping:
-    image: php:fate
-    container_name: scraping
-    restart: always
-    env_file: .env
+    image: php:8.2-apache
+    container_name: scraping-alg
+    restart: unless-stopped
     ports:
       - "8032:80"    
     volumes:
       - ./scrap:/var/www/html
-    networks:
-     - profe
-  scrap-db:
-    image: mysql:5.7
-    container_name: scrap-db
-    restart: always
-    ports:
-     - "3308:3306"
-    volumes:
-     - ./mysql:/var/lib/mysql
-     - ./mysql-files:/var/lib/mysql-files
-     - ./mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf:ro
-    env_file: .env     
-    networks:
-     - profe
-networks:
-  profe:
-    external: true
-    name: profe
